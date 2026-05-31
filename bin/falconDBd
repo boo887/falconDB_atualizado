@@ -6,7 +6,7 @@ case "$1" in
   start)
     echo "Cleaning logs..."
     ROOT="$(cd "$(dirname $0)/.." && pwd)"
-    rm -f "$ROOT"/log/*.out "$ROOT"/log/*.err "$ROOT"/log/.forever-* \
+    rm -f "$ROOT"/logs/*.out "$ROOT"/logs/*.err "$ROOT"/logs/.forever-* \
           "$ROOT"/logs/*.log
     echo "Building image..."
     podman compose -f "$COMPOSE_FILE" build

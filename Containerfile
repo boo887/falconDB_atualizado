@@ -25,7 +25,7 @@ ENV APP_ROOT=/app
 ENV PATH="${PATH}:/app/bin"
 
 # Create runtime directories (winston logs, forever logs, DB data)
-RUN mkdir -p /app/log /app/logs /app/DBdata
+RUN mkdir -p /app/logs /app/DBdata
 
 # Make all control scripts executable
 RUN chmod +x \

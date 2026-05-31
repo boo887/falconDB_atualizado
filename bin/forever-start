@@ -7,8 +7,8 @@ function usage()
 Usage: $prog <app_path> [-l <log_basename>] [-f <forever-options>] ...
 
 Will start as a daemon js program <app_path> with
-its stdout send to /app/log/<log_basename>.out and
-its stderr send to /app/log/<log_basename>.err .
+its stdout send to /app/logs/<log_basename>.out and
+its stderr send to /app/logs/<log_basename>.err .
 In case <log_basename> is not present it will be as
 "$( basename $<app_path> .js)".
 
@@ -64,7 +64,7 @@ fi
 
 #echo "app_path: $app_path, log_basename: $log_basename, f_opt: \"$f_opt\", @: $@"
 
-TMP=/app/log/.forever-start-$$-0.tmp
+TMP=/app/logs/.forever-start-$$-0.tmp
 trap "rm -f $TMP" 0 1 2 3 4 5
 
 dirname=$(dirname $app_path)
@@ -73,8 +73,8 @@ if [ "$dirname" != . ]; then
 fi
 basename=$(basename $app_path)
 
-err=$APP_ROOT/log/$log_basename.err
-out=$APP_ROOT/log/$log_basename.out
+err=$APP_ROOT/logs/$log_basename.err
+out=$APP_ROOT/logs/$log_basename.out
 
 FOREVER_OPTS="$f_opt \
   -m 10 \

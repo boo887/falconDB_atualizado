@@ -225,7 +225,7 @@ app.get('/db/r', async (req, res) => {
 /*
   UPDATE  (2PC)
 */
-app.post('/db/u', async (req, res) => {
+app.put('/db/u', async (req, res) => {
 
   try {
     const { key, value } = req.body;

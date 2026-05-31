@@ -596,7 +596,7 @@ app.get('/db/r', requireFromRPorTest, (req, res) => {
 /*
   UPDATE  (RPt)
 */
-app.post('/db/u', requireFromRPorTest, async (req, res) => {
+app.put('/db/u', requireFromRPorTest, async (req, res) => {
 
   if (state !== 'leader') {
     return res.json(response.failure('eDNNM002', 'not master – send requests through RP'));
