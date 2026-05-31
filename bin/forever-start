@@ -1,0 +1,89 @@
+#!/bin/bash
+
+function usage()
+{
+  prog=$(basename $0)
+  cat <<EOT
+Usage: $prog <app_path> [-l <log_basename>] [-f <forever-options>] ...
+
+Will start as a daemon js program <app_path> with
+its stdout send to /app/log/<log_basename>.out and
+its stderr send to /app/log/<log_basename>.err .
+In case <log_basename> is not present it will be as
+"$( basename $<app_path> .js)".
+
+If -f is present, its value will be passed as arguments 
+to FOREVER_OPTIONS variabble.
+Any aditional parameters ...) are added to the call of <app_path> .
+
+EXAMPLE:
+forever-start ./dn.js  3333
+
+will start ./dn.js as a daemon, receiving ./dn.js parameter
+3333, which will be the port to be used by the program ./dn.js
+
+EOT
+  if [ $# -eq 2 ]; then
+    echo "ERROR: $2" >&2
+  fi
+  exit $1
+}
+
+if [ $# -lt 1 ]; then
+  usage 10 "must has at least 1 arg."
+fi
+
+if [[ $1 == '-h' || $1 == '--help' ]]; then
+  usage 0
+fi
+
+log_basename=
+f_opt=
+
+while getopts hl:f: opt; do
+  case $opt in
+    h) usage 0;;
+    l) log_basename=$OPTARG;;
+    f) f_opt=$OPTARG;;
+    *) usage 10 "wrong option \"-$opt\".";;
+  esac
+done
+
+shift $(($OPTIND -1))
+app_path=$1
+shift
+
+if [[ ! -f $app_path ]]; then
+  echo "ERROR: file \"$app_path\" does not exist." >&2
+  exit 20
+fi
+
+if [ -z "$log_basename" ]; then
+  log_basename=$(basename "$app_path" .js)
+fi
+
+#echo "app_path: $app_path, log_basename: $log_basename, f_opt: \"$f_opt\", @: $@"
+
+TMP=/app/log/.forever-start-$$-0.tmp
+trap "rm -f $TMP" 0 1 2 3 4 5
+
+dirname=$(dirname $app_path)
+if [ "$dirname" != . ]; then
+  cd "$dirname"
+fi
+basename=$(basename $app_path)
+
+err=$APP_ROOT/log/$log_basename.err
+out=$APP_ROOT/log/$log_basename.out
+
+FOREVER_OPTS="$f_opt \
+  -m 10 \
+  -l $out \
+  -e $err \
+  -a \
+"
+#echo forever start $FOREVER_OPTS $basename $@ 2\>\$TMP >&2
+
+forever start $FOREVER_OPTS $basename $@ 2>$TMP
+
+exit $?

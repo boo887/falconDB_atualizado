@@ -1,0 +1,41 @@
+#!/bin/bash
+
+COMPOSE_FILE="$(cd "$(dirname $0)/.." && pwd)/docker-compose.yml"
+
+case "$1" in
+  start)
+    echo "Cleaning logs..."
+    ROOT="$(cd "$(dirname $0)/.." && pwd)"
+    rm -f "$ROOT"/log/*.out "$ROOT"/log/*.err "$ROOT"/log/.forever-* \
+          "$ROOT"/logs/*.log
+    echo "Building image..."
+    podman compose -f "$COMPOSE_FILE" build
+    echo "Starting all servers..."
+    podman compose -f "$COMPOSE_FILE" up -d
+    ;;
+  stop)
+    echo "Stopping all servers..."
+    podman compose -f "$COMPOSE_FILE" down
+    ;;
+  restart)
+    $0 stop
+    sleep 2
+    $0 start
+    ;;
+  stat)
+    echo "=== Container status ==="
+    podman ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null
+    echo ""
+    echo "=== Forever processes ==="
+    for c in rp dn0s1 dn0s2 dn0s3 dn1s1 dn1s2 dn1s3 dn2s1 dn2s2 dn2s3; do
+      echo "--- $c ---"
+      podman exec "$c" sh -c "forever list 2>/dev/null" 2>/dev/null \
+        || echo "  container not running"
+    done
+    ;;
+  *)
+    echo "Usage: $(basename $0) {start|stop|restart|stat}"
+    exit 1
+    ;;
+esac
+exit 0

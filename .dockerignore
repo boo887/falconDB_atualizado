@@ -1,0 +1,8 @@
+node_modules
+logs
+log
+DBdata
+srv
+to_delete_in_the_end
+*.log
+.git

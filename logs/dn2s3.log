@@ -1,0 +1,6 @@
+info: server started {"timestamp":"2026-05-31T05:01:25.411Z"}
+info: 2PC PREPARE op=create key=mykey {"timestamp":"2026-05-31T05:02:03.163Z"}
+info: 2PC PREPARE rejected locally: key already exists {"timestamp":"2026-05-31T05:02:03.166Z"}
+info: 2PC PREPARE op=create key=mykey1 {"timestamp":"2026-05-31T05:02:08.490Z"}
+info: 2PC PREPARE ok – all peers ready {"timestamp":"2026-05-31T05:02:08.511Z"}
+info: 2PC COMMIT create key=mykey1 {"timestamp":"2026-05-31T05:02:08.521Z"}

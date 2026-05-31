@@ -1,0 +1,55 @@
+(node:25) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+RP running on 8000
+info: RP started {"timestamp":"2026-05-31T05:01:24.145Z"}
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+dn2s1 running on 9021
+dn0s1 running on 9001
+info: server started {"timestamp":"2026-05-31T05:01:25.261Z"}
+info: server started {"timestamp":"2026-05-31T05:01:25.262Z"}
+dn1s2 running on 9012
+info: server started {"timestamp":"2026-05-31T05:01:25.267Z"}
+dn2s2 running on 9022
+dn0s3 running on 9003
+info: server started {"timestamp":"2026-05-31T05:01:25.306Z"}
+info: server started {"timestamp":"2026-05-31T05:01:25.307Z"}
+dn1s3 running on 9013
+dn0s2 running on 9002
+info: server started {"timestamp":"2026-05-31T05:01:25.352Z"}
+info: server started {"timestamp":"2026-05-31T05:01:25.356Z"}
+dn2s3 running on 9023
+info: server started {"timestamp":"2026-05-31T05:01:25.411Z"}
+dn1s1 running on 9011
+info: server started {"timestamp":"2026-05-31T05:01:25.694Z"}
+info: DN 0 leader -> http://dn0s2:9002 {"timestamp":"2026-05-31T05:01:31.521Z"}
+info: DN 2 leader -> http://dn2s3:9023 {"timestamp":"2026-05-31T05:01:31.564Z"}
+info: DN 1 leader -> http://dn1s2:9012 {"timestamp":"2026-05-31T05:01:33.444Z"}
+info: CREATE DN=2 leader=http://dn2s3:9023 {"timestamp":"2026-05-31T05:02:03.107Z"}
+info: 2PC PREPARE op=create key=mykey {"timestamp":"2026-05-31T05:02:03.163Z"}
+info: 2PC PREPARE rejected locally: key already exists {"timestamp":"2026-05-31T05:02:03.166Z"}
+info: CREATE DN=2 leader=http://dn2s3:9023 {"timestamp":"2026-05-31T05:02:08.477Z"}
+info: 2PC PREPARE op=create key=mykey1 {"timestamp":"2026-05-31T05:02:08.490Z"}
+info: 2PC VOTE yes for op=create key=mykey1 {"timestamp":"2026-05-31T05:02:08.501Z"}
+info: 2PC VOTE yes for op=create key=mykey1 {"timestamp":"2026-05-31T05:02:08.508Z"}
+info: 2PC PREPARE ok – all peers ready {"timestamp":"2026-05-31T05:02:08.511Z"}
+info: 2PC COMMIT create key=mykey1 {"timestamp":"2026-05-31T05:02:08.521Z"}
+info: replicated create key=mykey1 {"timestamp":"2026-05-31T05:02:08.526Z"}
+info: replicated create key=mykey1 {"timestamp":"2026-05-31T05:02:08.532Z"}
+info: 2PC CREATE committed key=mykey1 DN=2 {"timestamp":"2026-05-31T05:02:08.536Z"}

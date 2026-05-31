@@ -1,0 +1,39 @@
+0 - The server has two routes:
+
+/stat => requests server statistics.
+
+/api => according to the query string, sends it to one of the two servers.
+
+If id=abc then proxy to the server located at localhost:3000
+
+If id=cde then proxy to the server located at localhost:3100
+
+1 - To install, do:
+
+npm install
+
+2 - To activate the server:
+
+npm start
+
+3- To test
+
+a) Start the already provided tiny-serverS on ports 3000 and 3100.
+   Create two windows and do:
+      i) on window1: npm start -- 3000
+     ii) on window2: npm start -- 3100
+
+b) start this server:
+   npm start (or node app.js OR ./app.js  if in a UNIX machine), which will
+   start listening on port 4000
+
+c) on a browser (firefox will be better for the expected json responses) do:
+
+http://localhost:4000/api?id=abc&a=10&b=20 <= will send the request to the server running on port 3000
+
+http://localhost:4000/api?id=cde <= will send the request to the server running on port 3100
+
+http://localhost:4000/stat <= will display the server statistics
+
+4 - WARNING: We have explicitly decided not to handle any errors that may occur, nor do we use any logging system;
+             THIS IS JUST A SKELETON of a reverse proxy.

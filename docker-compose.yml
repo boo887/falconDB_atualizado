@@ -1,0 +1,129 @@
+services:
+  rp:
+    container_name: rp
+    hostname: rp
+    image: falcondb:latest
+    restart: always
+    ports:
+      - "8000:8000"
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn0s1:
+    container_name: dn0s1
+    hostname: dn0s1
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn0s1:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn0s2:
+    container_name: dn0s2
+    hostname: dn0s2
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn0s2:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn0s3:
+    container_name: dn0s3
+    hostname: dn0s3
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn0s3:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn1s1:
+    container_name: dn1s1
+    hostname: dn1s1
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn1s1:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn1s2:
+    container_name: dn1s2
+    hostname: dn1s2
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn1s2:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn1s3:
+    container_name: dn1s3
+    hostname: dn1s3
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn1s3:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn2s1:
+    container_name: dn2s1
+    hostname: dn2s1
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn2s1:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn2s2:
+    container_name: dn2s2
+    hostname: dn2s2
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn2s2:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log
+
+  dn2s3:
+    container_name: dn2s3
+    hostname: dn2s3
+    image: falcondb:latest
+    restart: always
+    depends_on:
+      - rp
+    command: bash -c ". /app/etc/bashrc && forever-start.sh && exec tail -f /dev/null"
+    volumes:
+      - ./DBdata/dn2s3:/app/DBdata
+      - ./logs:/app/logs
+      - ./log:/app/log

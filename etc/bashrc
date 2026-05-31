@@ -1,0 +1,166 @@
+#########################################
+#########################################
+### Sistemas distribuidos
+### Universidade Portucalense - UPT
+### Deployed Distributed System's bashrc
+### UPT-2026 - r0.1
+#########################################
+
+## if dn_n is defined => returns!
+test -n "$dn_n" && return 0
+
+dn_n=3      #number of dataNodes
+servers_n=3 #number of servers per dataNode
+
+dn_n_1=$(( $dn_n - 1 ))
+servers_n_1=$(( $servers_n - 1 ))
+
+export APP_ROOT=/app
+host=$(hostname)
+export hostname=$host
+if [ $host = rp ];then
+  server_type=reverseProxy
+  log_name=rp
+else
+  server_type=dataNode
+  log_name=dn
+fi
+export server_type
+# umask 022
+
+PATH=$PATH:$APP_ROOT/bin:$APP_ROOT/src/$server_type/bin
+
+# used to convert rp, 0-1 ... 2-3, or 01 ... 23 to dn0s1 ... dn2s3
+function def_host()
+{
+  if [ $# -eq 0 ]; then
+    echo rp
+    return 0
+  fi
+
+  if [[ "$1" == rp ]]; then
+    echo "$1"
+    return 0
+  fi
+
+  if [[ $1 =~ ^[0-2]-[1-3]$ ]]; then
+    dn=$(echo $1 | cut -d- -f1)
+    s=$(echo $1 | cut -d- -f2)
+    echo "dn${dn}s${s}"
+    return 0
+  elif [[ $1 =~ ^[0-2][1-3]$ ]]; then
+    dn=$(echo $1 | cut -c1)
+    s=$(echo $1 | cut -c2)
+    echo "dn${dn}s${s}"
+    return 0
+  else
+    echo "Error: 1st argument can only be rp or [0-$dn_n_1]-[1-$servers_n] or [0-$dn_n_1][1-$servers_n]."
+    return 10
+  fi
+}
+export dbName="$(<$APP_ROOT/etc/dbName)"
+
+#if is not interactive => return.
+if [[ ! ( $- =~ .*i.* ) ]]; then
+  return 0
+fi
+
+#### Here if interactive shell ####
+_OFF="`tput rmso`[m"
+BOLD=`tput smso` 
+BOLD_OFF=`tput rmso`
+red="[0;31m"
+green="[0;32m"
+nBlue="[0;34m"
+
+function repeat(){
+  _s=
+  i=0
+  while [ $i -lt $2 ]; do _s="$_s$1"; i=$(( $i + 1 )); done
+  echo $_s
+}
+
+function do_welcome(){
+  welCome="Welcome to $(<$APP_ROOT/etc/dbName) backend!"
+  wcLen=$(expr length "$welCome")
+  len=$wcLen
+  if [ $host = rp ]; then
+    host_desc="This is the reverseProxy"
+  else
+    _host=$(echo $host | sed 's/[a-zA-Z]//g')
+    dNode=$(echo $_host|cut -d- -f1)
+    srv_id=$(echo $_host|cut -d- -f2)
+    host_desc="This is server ${srv_id} of dataNode ${dNode}"
+  fi
+  hdLen=$(expr length "$host_desc")
+  if [ $hdLen -gt $len ]; then
+    len=$hdLen
+  fi
+  Tlen=$(( $len + 10 ))
+  echo "${BOLD}${PS1_color}"
+  colon=$(repeat : $Tlen)
+
+  echo $colon
+  printf ":::: %-${len}s ::::\n" "Sistemas distribuidos"
+  printf ":::: %-${len}s ::::\n" "$welCome"
+  printf ":::: %-${len}s ::::\n" "$host_desc"
+  echo $colon
+  echo "${BOLD_OFF}${_OFF}"
+}
+
+## Make a nice PS1
+function setps1(){
+  prf=$1
+  if [ $host = rp ]; then
+    PS1_color=${red}
+else
+  PS1_color=${nBlue}
+  fi
+  PS1='${debian_chroot:+($debian_chroot)}${BOLD}${PS1_color}${prf}\u@\h:\w\$${BOLD_OFF}${_OFF} '
+}
+
+setps1
+do_welcome
+
+# You may uncomment the following lines if you want `ls' to be colorized:
+export LS_OPTIONS='--color=auto'
+eval "$(dircolors)"
+
+#### Few aliases ####
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
+alias lo=exit
+alias ..='cd ..'
+alias ...='cd ../..'
+#
+# Some more alias to avoid making mistakes:
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+############################################
+### To move fast between our DS network  ###
+### and inside each server's FS          ###
+alias rp='srv rp'
+
+alias 01='srv 0-1'
+alias 02='srv 0-2'
+alias 03='srv 0-3'
+
+alias 11='srv 1-1'
+alias 12='srv 1-2'
+alias 13='srv 1-3'
+
+alias 21='srv 2-1'
+alias 22='srv 2-2'
+alias 23='srv 2-3'
+alias f-list='forever list 2>/dev/null'
+
+alias lst='ls -lrt|tail'
+alias etc='cd $APP_ROOT/etc;lst'
+alias bin='cd $APP_ROOT/bin;lst'
+alias log='cd $APP_ROOT/log;lst'
+alias src='cd $APP_ROOT/src/$server_type;lst'
+alias sbin='cd $APP_ROOT/src/$server_type/bin;lst'
+alias tlog='test -f /app/log/$log_name.out && printf "\n======\nPress ctrl+C to stop.\n======\n" && tail -f /app/log/$log_name.out'

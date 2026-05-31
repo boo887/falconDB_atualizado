@@ -1,0 +1,7 @@
+info: RP started {"timestamp":"2026-05-31T05:01:24.145Z"}
+info: DN 0 leader -> http://dn0s2:9002 {"timestamp":"2026-05-31T05:01:31.521Z"}
+info: DN 2 leader -> http://dn2s3:9023 {"timestamp":"2026-05-31T05:01:31.564Z"}
+info: DN 1 leader -> http://dn1s2:9012 {"timestamp":"2026-05-31T05:01:33.444Z"}
+info: CREATE DN=2 leader=http://dn2s3:9023 {"timestamp":"2026-05-31T05:02:03.107Z"}
+info: CREATE DN=2 leader=http://dn2s3:9023 {"timestamp":"2026-05-31T05:02:08.477Z"}
+info: 2PC CREATE committed key=mykey1 DN=2 {"timestamp":"2026-05-31T05:02:08.536Z"}

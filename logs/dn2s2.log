@@ -1,0 +1,3 @@
+info: server started {"timestamp":"2026-05-31T05:01:25.306Z"}
+info: 2PC VOTE yes for op=create key=mykey1 {"timestamp":"2026-05-31T05:02:08.508Z"}
+info: replicated create key=mykey1 {"timestamp":"2026-05-31T05:02:08.532Z"}

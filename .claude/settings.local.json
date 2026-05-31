@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/maria/falconDB/**)",
+      "Read(//etc/**)",
+      "Bash(docker --version)",
+      "Bash(wsl -d Ubuntu -- bash -c 'cat /etc/os-release | grep -E \"^NAME|VERSION=\"; echo \"---tools---\"; which docker podman docker-compose 2>/dev/null; echo \"---node---\"; node --version 2>/dev/null; echo \"exit\"')",
+      "Bash(wsl -d Ubuntu -- bash -c 'echo \"=== docker working? ===\"; docker info --format \"{{.ServerVersion}}\" 2>&1 | head -3; echo \"=== docker compose? ===\"; docker compose version 2>&1 | head -1; echo \"=== apt-cache podman ===\"; apt-cache policy podman 2>&1 | head -5; echo \"=== universe enabled? ===\"; grep -rh \"Components\" /etc/apt/sources.list.d/ 2>/dev/null | head; grep -h universe /etc/apt/sources.list 2>/dev/null | head')",
+      "Bash(wsl -d Ubuntu -- bash -c 'cd ~/serversFS; echo \"=== CRLF check \\(1=has CRLF\\) ===\"; for f in bin/falconDBd bin/forever-start src/reverseProxy/bin/start-dn.sh etc/config etc/dbName; do printf \"%s: \" \"$f\"; if grep -lU $'\\\\''\\\\r'\\\\'' \"$f\" >/dev/null 2>&1; then echo CRLF; else echo LF; fi; done; echo \"=== Zone.Identifier count ===\"; find . -name \"*Zone.Identifier\" | wc -l; echo \"=== ssh key perms ===\"; ls -l srv/rp/.ssh/id_ed25519 2>/dev/null')"
+    ]
+  }
+}
